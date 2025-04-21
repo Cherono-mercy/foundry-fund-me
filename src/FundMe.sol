@@ -9,18 +9,16 @@ error FundMe__NotOwner();
 
 contract FundMe {
     using PriceConverter for uint256;
-    
 
     //state variables
     mapping(address => uint256) private s_addressToAmountFunded; //Storage variable
     address[] private s_funders;
 
     // Could we make this constant?  /* hint: no! We should make it immutable! */
-    //This is the storage and immutable variables section 
+    //This is the storage and immutable variables section
     address private immutable i_owner;
     uint256 public constant MINIMUM_USD = 5e18;
     AggregatorV3Interface private s_priceFeed;
-
 
     constructor(address priceFeed) {
         i_owner = msg.sender;
@@ -94,15 +92,15 @@ contract FundMe {
     }
 
     // view/pure functions (Getters)
-    function getAddressToAmountFunded(address fundingAddress) external view returns(uint256) {
+    function getAddressToAmountFunded(address fundingAddress) external view returns (uint256) {
         return s_addressToAmountFunded[fundingAddress];
     }
 
-    function getFunder(uint256 index) external view returns(address){
+    function getFunder(uint256 index) external view returns (address) {
         return s_funders[index];
     }
 
-    function getOwner() external view returns(address) {
+    function getOwner() external view returns (address) {
         return i_owner;
     }
 }

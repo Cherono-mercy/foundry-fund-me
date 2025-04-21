@@ -2,26 +2,24 @@
 
 pragma solidity ^0.8.18;
 
-import { Test, console } from "forge-std/Test.sol";
-import { FundMe } from "../../src/FundMe.sol";
-import { DeployFundMe } from "../../script/DeployFundMe.s.sol";
-import { FundFundMe, WithdrawFundMe } from "../../script/Interactions.s.sol";
+import {Test, console} from "forge-std/Test.sol";
+import {FundMe} from "../../src/FundMe.sol";
+import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
+import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
 
 contract InteractionsTest is Test {
-
     FundMe fundMe;
     DeployFundMe deployFundMe;
 
     address USER = makeAddr("user");
     uint256 constant SEND_VALUE = 0.01 ether;
     uint256 constant STARTING_BALANCE = 10 ether;
+
     function setUp() external {
         deployFundMe = new DeployFundMe();
         fundMe = deployFundMe.run();
         vm.deal(USER, STARTING_BALANCE);
     }
-
-    
 
     function testUserCanFundAndOwnerWithdraw() public {
         uint256 preUserBalance = address(USER).balance;
@@ -40,6 +38,5 @@ contract InteractionsTest is Test {
         assert(address(fundMe).balance == 0);
         assertEq(afterUserBalance + SEND_VALUE, preUserBalance);
         assertEq(preOwnerBalance + SEND_VALUE, afterOwnerBalance);
-
     }
 }
